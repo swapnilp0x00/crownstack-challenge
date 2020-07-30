@@ -1,6 +1,14 @@
-<div class="flex-container">
-    <div class="item">
-        <h3>Welcome To Rental Management System </h3>
-        <h5>Please Select Location</h5>
-    </div>    
+<div class="container">
+    <div *ngIf="filteredData.length === 0" class="flex-container flex-row">
+        <div class="item">
+            <h3>Welcome To Rental Management System </h3>
+            <h5>Please Select Location</h5>
+        </div>
+    </div>
+
+    <div *ngIf="filteredData.length > 0" class="data-container">
+        <ng-container *ngFor="let item of filteredData; let i = index">
+            <app-item-view [index]="i" [name]="item.name" [image]="item.image"></app-item-view>
+        </ng-container>
+    </div>
 </div>

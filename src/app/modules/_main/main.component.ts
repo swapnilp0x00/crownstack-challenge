@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { AppService } from '../../app.service';
 import { MatMenuItem } from '@angular/material/menu';
+import { Router } from '@angular/router';
 
 type MenuItem = {
   name: string, dealers_id: string,
@@ -24,7 +25,8 @@ export class MainComponent implements OnInit {
   menuItems: MenuItem[];
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private appService: AppService
+    private appService: AppService,
+    private router: Router
   ) {
 
   }
@@ -55,7 +57,11 @@ export class MainComponent implements OnInit {
 
 
   setFilter(filter) {
-    console.log(filter);
+    if (filter.dealers_id && filter.branch_id) {
+      this.router.navigate([filter.dealers_id, filter.branch_id]);
+    } else {
+      this.router.navigate([filter.dealers_id]);
+    }
   }
 
 }

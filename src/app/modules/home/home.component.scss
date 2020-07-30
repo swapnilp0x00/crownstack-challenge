@@ -1,12 +1,21 @@
+.container {
+  height: 110vh;
+//   border: 2px solid red;
+}
 .flex-container {
-    display: flex;
+}
+
+.flex-row {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 90vh;
-    border: 2px solid red;
+}
+
+.data-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: inherit;  
 }
 
 .item {
-    text-align: center;
+  text-align: center;
 }
