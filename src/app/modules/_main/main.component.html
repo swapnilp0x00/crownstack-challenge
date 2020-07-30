@@ -2,9 +2,35 @@
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <span>Rental Management System</span>
-      <span> Select Location</span>
     </mat-toolbar>
     <!-- Add Content Here -->
+    <ng-container *ngFor="let location of (getMenu() | async)">
+      <button mat-menu-item>
+        {{ location.name }}
+      </button>
+      <button *ngFor="let branch of location.branches" mat-menu-item>
+        {{ branch.name }}
+      </button>
+    </ng-container>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<button mat-button [matMenuTriggerFor]="main_menu">My menu</button>
+
+<mat-menu #main_menu="matMenu">
+  <ng-template matMenuContent>
+    <ng-container *ngFor="let location of (getMenu() | async)">
+      <button mat-menu-item [matMenuTriggerFor]="sub_menu"
+        [matMenuTriggerData]="{branches: location.branches}">{{ location.name }}</button>
+    </ng-container>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #sub_menu="matMenu">
+  <ng-template matMenuContent let-branches="branches">
+    <ng-container *ngFor="let branch of branches">
+      <button mat-menu-item>{{ branch.name }}</button>
+    </ng-container>
+  </ng-template>
+</mat-menu>

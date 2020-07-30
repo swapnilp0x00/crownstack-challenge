@@ -1,4 +1,4 @@
-{
+let data = {
 	"status": "success",
 	"data": {
 		"locations": [
@@ -2753,4 +2753,7 @@
 		]
 	},
 	"error": {}
-}
+};
+
+const response = Object.freeze(data);
+export default response;
