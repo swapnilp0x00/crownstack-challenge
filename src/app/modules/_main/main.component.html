@@ -12,16 +12,22 @@
 <mat-menu #main_menu="matMenu">
   <ng-template matMenuContent>
     <ng-container *ngFor="let location of menuItems">
-      <button mat-menu-item [matMenuTriggerFor]="sub_menu" [matMenuTriggerData]="{branches: location.branches}">{{ location.name }}</button>
+      <button mat-menu-item (click)="setFilter({dealers_id: location.dealers_id})"
+        [matMenuTriggerFor]="sub_menu"
+        [matMenuTriggerData]="{location: location}">
+        {{ location.name }}
+      </button>
     </ng-container>
   </ng-template>
 </mat-menu>
 
 
 <mat-menu #sub_menu="matMenu">
-  <ng-template matMenuContent let-branches="branches">
-    <ng-container *ngFor="let branch of branches">
-      <button mat-menu-item>{{ branch.name }}</button>
+  <ng-template matMenuContent let-location="location">
+    <ng-container *ngFor="let branch of location.branches">
+      <button mat-menu-item (click)="setFilter({dealers_id: location.dealers_id, branch_id: branch.branch_id})">
+        {{ branch.name }}
+      </button>
     </ng-container>
   </ng-template>
 </mat-menu>

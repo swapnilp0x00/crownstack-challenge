@@ -53,4 +53,9 @@ export class MainComponent implements OnInit {
     );
   }
 
+
+  setFilter(filter) {
+    console.log(filter);
+  }
+
 }
