@@ -3,27 +3,25 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, of } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { AppService } from '../../app.service';
+import { MatMenuItem } from '@angular/material/menu';
 
+type MenuItem = {
+  name: string, dealers_id: string,
+  branches: { branch_id: string, name: string }[]
+};
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  my_menu = {
-    'main1': ['sub1', 'sub2'],
-    'main2': ['sub1', 'sub2'],
-  }
-
-  get keys() {
-    return Object.keys(this.my_menu);
-  }
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
 
+  menuItems: MenuItem[];
   constructor(
     private breakpointObserver: BreakpointObserver,
     private appService: AppService
@@ -32,7 +30,9 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getMenu();
+    this.getMenu().subscribe((response: MenuItem[]) => {
+      this.menuItems = response;
+    });
   }
 
   getMenu(): Observable<Array<any>> {
@@ -48,8 +48,8 @@ export class MainComponent implements OnInit {
             };
           })
         };
-      })),
-      tap(res => console.log(res))
+      })
+      )
     );
   }
 
