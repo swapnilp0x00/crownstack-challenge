@@ -1,9 +1,22 @@
 .mat-card-footer {
     background-color: cornflowerblue;
+    color: white;
+    font-weight: bold;
     text-align: center;
     height: 40px;
     vertical-align: middle;
 }
 .mat-card {
     margin: 5px;
+}
+
+.flex-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.row {
+    flex-direction: row;
 }

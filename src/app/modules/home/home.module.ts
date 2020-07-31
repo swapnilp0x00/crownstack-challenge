@@ -6,13 +6,14 @@ import { HomeComponent } from './home.component';
 import { ItemViewComponent } from './item-view/item-view.component';
 import {MatCardModule} from '@angular/material/card';
 import { GridComponent } from './grid/grid.component';
-
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [HomeComponent, ItemViewComponent, GridComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ]
 })
 export class HomeModule { }

@@ -1,10 +1,13 @@
 <mat-card>
   <mat-card-content>
     <p>
-        <img src="../../../../assets/category/booms.png" width="150px" height="150px" alt="">
+      <img src="../../../../assets/category/booms.png" width="150px" height="150px" alt="">
     </p>
   </mat-card-content>
   <mat-card-footer>
-      {{index}}. {{name}}
+    <div class="flex-container row">
+      {{name}}
+      <mat-icon aria-hidden="false" aria-label="Example home icon">play_arrow</mat-icon>
+    </div>
   </mat-card-footer>
 </mat-card>
