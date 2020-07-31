@@ -14,17 +14,15 @@ export enum GridType {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  data = [];
-  filteredData = [];
-  gridType = GridType.Category;
-  category: {name: string};
+  data = [];   // store original items.
+  filteredData: Array<{ name: string, image: string }> = []; // store filtered items based on filters applied. derived from data array.
+  gridType = GridType.Category; // type of grid. category / subcategory.
   breadcrumb = [];
+
   constructor(
     private appService: AppService,
     private activatedRoute: ActivatedRoute
   ) {
-
   }
 
   ngOnInit(): void {
@@ -42,27 +40,20 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
-  applyFilters() {
+  /**
+   * applyFilters - whenever route parameters or query parameter changes, call apply filters to apply new filters.
+   */
+  applyFilters(): void {
     const snapshot = this.activatedRoute.snapshot;
-    const {params, queryParams} = snapshot;
+    const { params, queryParams } = snapshot;
     this.gridType = GridType.Category;
     this.breadcrumb = ['Equipment Catalog'];
     let categories;
     // Dealers_ID
     if (params.dealers_id) {
-      const location = this.data.find(loc => loc.dealers_id === params.dealers_id);
-      const branches = location.branches;
+      const branches = this.getBranchesByDealerId(this.data, params.dealers_id);
       // Branch ID
-      if (params.branch_id) {
-        const branch = branches.find(item => item.branch_id === params.branch_id);
-        categories = branch.categories;
-      } else {
-        categories = branches.reduce((acc, branch) => {
-          acc = acc.concat(branch.categories);
-          return acc;
-        }, []);
-      }
+      categories = this.getCategoriesByBranchId(branches, params.branch_id);
 
       if (queryParams.category) {
         const category = categories.find(item => item.name === queryParams.category);
@@ -79,4 +70,34 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @param data - Data to be filtered
+   * @param dealers_id - dealers id to filter oit branches
+   */
+  getBranchesByDealerId(data: { dealers_id: string, branches: any }[] = [], dealers_id: string): Array<any> {
+    let branches = [];
+    const location = data.find(loc => loc.dealers_id === dealers_id);
+    branches = location.branches;
+    return branches;
+  }
+
+  /**
+   * 
+   * @param branches
+   * @param branch_id
+   */
+  getCategoriesByBranchId(branches, branch_id: string): Array<any> {
+    let categories = [];
+    if (branch_id) {
+      const branch = branches.find(item => item.branch_id === branch_id);
+      categories = branch.categories;
+    } else {
+      categories = branches.reduce((acc, branch) => {
+        acc = acc.concat(branch.categories);
+        return acc;
+      }, []);
+    }
+    return categories;
+  }
 }

@@ -7,7 +7,7 @@ import { GridType } from '../home.component';
   styleUrls: ['./item-view.component.scss']
 })
 export class ItemViewComponent implements OnInit {
-  @Input() index;
+  @Input() index: number;
   @Input() name: string;
   @Input() image: string;
   @Input() gridType: GridType;

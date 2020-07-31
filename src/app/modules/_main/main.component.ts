@@ -31,13 +31,17 @@ export class MainComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getMenu().subscribe((response: MenuItem[]) => {
       this.menuItems = response;
     });
   }
 
-  getMenu(): Observable<Array<any>> {
+  /**
+   * getMenu - used to build array of menus from response
+   * @return - Array of menu. Tree structure (menu -> submenu); 
+   */
+  getMenu(): Observable<MenuItem[]> {
     return this.appService.response$.pipe(
       map(res => res.data.locations),
       map(locations => locations.map(location => {
@@ -55,8 +59,11 @@ export class MainComponent implements OnInit {
     );
   }
 
-
-  setFilter(filter) {
+  /**
+   * setFilter - called when any of the menu item is clicked.
+   * @param - filters to apply in route {dealers_id, branch_id}
+   */
+  setFilter(filter: {dealers_id: string, branch_id?: string}): void {
     if (filter.dealers_id && filter.branch_id) {
       this.router.navigate([filter.dealers_id, filter.branch_id]);
     } else {

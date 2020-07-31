@@ -8,7 +8,7 @@ import { GridType } from '../home.component';
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent implements OnInit {
-  @Input() list: Array<any>;
+  @Input() list: Array<{name: string, image: string}>;
   @Input() gridType: GridType;
 
   constructor(
