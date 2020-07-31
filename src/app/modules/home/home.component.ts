@@ -51,6 +51,8 @@ export class HomeComponent implements OnInit {
           return acc;
         }, []);
       }
+
+      const snapshot = this.activatedRoute.snapshot;
     }
 
     console.log(this.filteredData);

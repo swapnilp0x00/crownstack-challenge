@@ -12,4 +12,8 @@ export class GridComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  loadSubcategory(item) {
+    console.log(item);
+  }
 }

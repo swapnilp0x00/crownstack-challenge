@@ -1,5 +1,6 @@
 <div *ngIf="list.length > 0" class="data-container">
         <ng-container *ngFor="let item of list; let i = index">
-            <app-item-view [index]="i" [name]="item.name" [image]="item.image"></app-item-view>
+            <app-item-view [index]="i" [name]="item.name" [image]="item.image" (click)="loadSubcategory(item)">
+            </app-item-view>
         </ng-container>
     </div>
