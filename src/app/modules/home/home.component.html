@@ -6,9 +6,7 @@
         </div>
     </div>
 
-    <div *ngIf="filteredData.length > 0" class="data-container">
-        <ng-container *ngFor="let item of filteredData; let i = index">
-            <app-item-view [index]="i" [name]="item.name" [image]="item.image"></app-item-view>
-        </ng-container>
-    </div>
+
+    <app-grid [list]="filteredData">
+    </app-grid>
 </div>
