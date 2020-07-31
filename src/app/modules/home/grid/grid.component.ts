@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GridType } from '../home.component';
 
@@ -18,7 +18,6 @@ export class GridComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 
   loadSubcategory(item: { name: string }): void {
     if (this.gridType === GridType.Category) {

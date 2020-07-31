@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <p>
-      <img src="../../../../assets/category/booms.png" width="150px" height="150px" alt="">
+      <img *ngIf="image" [src]="image" width="150px" height="150px" alt="Image">
     </p>
   </mat-card-content>
   <mat-card-footer>
