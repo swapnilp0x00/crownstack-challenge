@@ -5,9 +5,10 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { ItemViewComponent } from './item-view/item-view.component';
 import {MatCardModule} from '@angular/material/card';
+import { GridComponent } from './grid/grid.component';
 
 @NgModule({
-  declarations: [HomeComponent, ItemViewComponent],
+  declarations: [HomeComponent, ItemViewComponent, GridComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
