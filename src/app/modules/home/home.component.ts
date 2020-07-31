@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../app.service';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { Dealer, Branch, Category, Subcategory } from '../../interaces/interfaces';
 
 
 export enum GridType {
@@ -48,24 +49,23 @@ export class HomeComponent implements OnInit {
     const { params, queryParams } = snapshot;
     this.gridType = GridType.Category;
     this.breadcrumb = ['Equipment Catalog'];
-    let categories;
+    let categories = [];
     // Dealers_ID
     if (params.dealers_id) {
       const branches = this.getBranchesByDealerId(this.data, params.dealers_id);
       // Branch ID
       categories = this.getCategoriesByBranchId(branches, params.branch_id);
 
+      this.filteredData = categories;
+
+      // Filter by category
       if (queryParams.category) {
         const category = categories.find(item => item.name === queryParams.category);
         if (category) {
-          this.breadcrumb.push(category.name);
           this.filteredData = category.subcategories || [];
           this.gridType = GridType.Subcategory;
-        } else {
-          this.filteredData = categories;
+          this.breadcrumb.push(category.name);
         }
-      } else {
-        this.filteredData = categories;
       }
     }
   }
@@ -75,22 +75,22 @@ export class HomeComponent implements OnInit {
    * @param data - Data to be filtered
    * @param dealers_id - dealers id to filter oit branches
    */
-  getBranchesByDealerId(data: { dealers_id: string, branches: any }[] = [], dealers_id: string): Array<any> {
+  getBranchesByDealerId(data: Dealer[] = [], dealersId: string): Branch[] {
     let branches = [];
-    const location = data.find(loc => loc.dealers_id === dealers_id);
+    const location = data.find(loc => loc.dealers_id === dealersId);
     branches = location.branches;
     return branches;
   }
 
   /**
-   * 
-   * @param branches
-   * @param branch_id
+   * getCategoriesByBranchId - Filter categories by branchId, if no branch id provided then return categoreis of all branches
+   * @param - branches
+   * @param - branch_id
    */
-  getCategoriesByBranchId(branches, branch_id: string): Array<any> {
+  getCategoriesByBranchId(branches: Branch[], branchId: string): Category[] {
     let categories = [];
-    if (branch_id) {
-      const branch = branches.find(item => item.branch_id === branch_id);
+    if (branchId) {
+      const branch = branches.find(item => item.branch_id === branchId);
       categories = branch.categories;
     } else {
       categories = branches.reduce((acc, branch) => {

@@ -5,11 +5,8 @@ import { map, shareReplay, tap } from 'rxjs/operators';
 import { AppService } from '../../app.service';
 import { MatMenuItem } from '@angular/material/menu';
 import { Router } from '@angular/router';
+import { MenuItem } from '../../interaces/interfaces';
 
-type MenuItem = {
-  name: string, dealers_id: string,
-  branches: { branch_id: string, name: string }[]
-};
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
