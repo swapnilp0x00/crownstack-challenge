@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../app.service';
-import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { filter, tap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+
+
+export enum GridType {
+  'Category' = 0,
+  'Subcategory' = 1
+}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,6 +17,9 @@ export class HomeComponent implements OnInit {
 
   data = [];
   filteredData = [];
+  gridType = GridType.Category;
+  category: {name: string};
+  breadcrumb = [];
   constructor(
     private appService: AppService,
     private activatedRoute: ActivatedRoute
@@ -26,36 +34,49 @@ export class HomeComponent implements OnInit {
       this.data = data;
     });
 
-    this.activatedRoute.params.subscribe(({ dealers_id, branch_id}) => {
-      console.log(dealers_id, branch_id);
-      this.applyFilters({
-        dealers_id,
-        branch_id,
-      });
+    this.activatedRoute.params.subscribe((params) => {
+      this.applyFilters();
+    });
+    this.activatedRoute.queryParams.subscribe((queryParams) => {
+      this.applyFilters();
     });
   }
 
 
-  applyFilters(filter: { dealers_id: string, branch_id: string }) {
+  applyFilters() {
+    const snapshot = this.activatedRoute.snapshot;
+    const {params, queryParams} = snapshot;
+    this.gridType = GridType.Category;
+    this.breadcrumb = ['Equipment Catalog'];
+    let categories;
     // Dealers_ID
-    if (filter.dealers_id) {
-      const location = this.data.find(location => location.dealers_id === filter.dealers_id);
+    if (params.dealers_id) {
+      const location = this.data.find(loc => loc.dealers_id === params.dealers_id);
       const branches = location.branches;
       // Branch ID
-      if (filter.branch_id) {
-        const branch = branches.find(branch => branch.branch_id === filter.branch_id);
-        this.filteredData = branch.categories;
+      if (params.branch_id) {
+        const branch = branches.find(item => item.branch_id === params.branch_id);
+        categories = branch.categories;
       } else {
-        this.filteredData = branches.reduce((acc, branch) => {
+        categories = branches.reduce((acc, branch) => {
           acc = acc.concat(branch.categories);
           return acc;
         }, []);
       }
 
-      const snapshot = this.activatedRoute.snapshot;
+      if (queryParams.category) {
+        const category = categories.find(item => item.name === queryParams.category);
+        if (category) {
+          this.breadcrumb.push(category.name);
+          this.filteredData = category.subcategories || [];
+          this.gridType = GridType.Subcategory;
+        } else {
+          this.filteredData = categories;
+        }
+      } else {
+        this.filteredData = categories;
+      }
     }
-
-    console.log(this.filteredData);
   }
 
 }

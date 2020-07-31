@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GridType } from '../home.component';
 
 @Component({
   selector: 'app-grid',
@@ -7,13 +9,20 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class GridComponent implements OnInit {
   @Input() list: Array<any>;
-  constructor() { }
+  @Input() gridType: GridType;
+
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
   }
 
 
-  loadSubcategory(item) {
-    console.log(item);
+  loadSubcategory(item: { name: string }): void {
+    if (this.gridType === GridType.Category) {
+      this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { category: item.name } });
+    }
   }
 }

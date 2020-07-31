@@ -5,8 +5,10 @@
             <h5>Please Select Location</h5>
         </div>
     </div>
+    <div style="margin: 35px;">
+        {{breadcrumb.join(' / ')}}
+    </div>
 
-
-    <app-grid [list]="filteredData">
+    <app-grid [gridType]="gridType" [list]="filteredData">
     </app-grid>
 </div>

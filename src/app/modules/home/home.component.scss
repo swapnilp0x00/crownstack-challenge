@@ -1,8 +1,12 @@
 .container {
-  height: 110vh;
+  height: 100vh;
 //   border: 2px solid red;
 }
 .flex-container {
+  display: flex;
+  height: inherit;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex-row {
