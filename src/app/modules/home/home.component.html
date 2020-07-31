@@ -5,7 +5,7 @@
             <h5>Please Select Location</h5>
         </div>
     </div>
-    <div style="margin: 35px;">
+    <div *ngIf="filteredData.length > 0" style="margin: 35px;">
         {{breadcrumb.join(' / ')}}
     </div>
 

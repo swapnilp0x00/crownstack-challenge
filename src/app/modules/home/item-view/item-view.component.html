@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <p>
-      <img *ngIf="image" [src]="image" width="150px" height="150px" alt="Image">
+      <img *ngIf="image" [src]="image" width="150px" height="150px" alt="Image" (error)="loadDummyImage()">
     </p>
   </mat-card-content>
   <mat-card-footer>

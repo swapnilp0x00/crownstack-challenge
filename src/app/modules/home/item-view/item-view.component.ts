@@ -21,4 +21,9 @@ export class ItemViewComponent implements OnInit {
     }
   }
 
+
+  loadDummyImage() {
+    console.log('hello');
+    this.image = '../../../../assets/150.png';
+  }
 }
